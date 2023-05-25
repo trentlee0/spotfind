@@ -15,7 +15,7 @@ module.exports = async (context) => {
     return
   }
 
-  const appId = 'com.electron.app'
+  const appId = context.packager.appInfo.info._configuration.appId
 
   const { appOutDir } = context
 

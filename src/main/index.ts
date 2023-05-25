@@ -14,6 +14,7 @@ import {
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { ContextCommandEnum, EventConstant } from '~/common/constant'
+import { autoUpdater } from 'electron-updater'
 
 let mainWindow: BrowserWindow | null = null
 
@@ -58,6 +59,11 @@ const template: Array<MenuItemConstructorOptions | MenuItem> = [
     label: app.name,
     submenu: [
       { role: 'about' },
+      {
+        label: 'Check for Updates',
+        click: () => autoUpdater.checkForUpdatesAndNotify()
+      },
+      { type: 'separator' },
       { type: 'separator' },
       {
         label: 'Preferences',
@@ -152,6 +158,10 @@ app.whenReady().then(() => {
   })
 
   createWindow()
+
+  app.on('ready', function () {
+    autoUpdater.checkForUpdatesAndNotify()
+  })
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()

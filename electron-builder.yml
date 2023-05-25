@@ -5,26 +5,28 @@ directories:
 files:
   - "!**/.vscode/*"
   - "!src/*"
-  - "!vite.config.{js,ts,mjs,cjs}"
-  - "!{.prettierignore,.prettierrc,dev-app-update.yml,CHANGELOG.md,README.md}"
+  - "!electron.vite.config.{js,ts,mjs,cjs}"
+  - "!{.prettierignore,.prettierrc,CHANGELOG.md,README.md}"
   - "!{.env,.env.*,.npmrc,pnpm-lock.yaml}"
   - "!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}"
 asarUnpack:
   - resources/**
 afterSign: build/notarize.js
 mac:
-  icon: resources/icon.png
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+  artifactName: ${productName}-${os}-${version}-${arch}.${ext}
+  category: public.app-category.utilities
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
     - NSCameraUsageDescription: Application requests access to the device's camera.
     - NSMicrophoneUsageDescription: Application requests access to the device's microphone.
     - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
     - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
-dmg:
-  artifactName: ${name}-${version}.${ext}
-appImage:
-  artifactName: ${name}-${version}.${ext}
 npmRebuild: false
 publish:
-  provider: generic
-  url: https://example.com/auto-updates
+  provider: github
+  releaseType: release

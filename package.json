@@ -4,14 +4,14 @@
   "description": "Find files on your Mac using Spotlight",
   "main": "./out/main/index.js",
   "author": "Trent Lee",
-  "homepage": "https://github.com/trentlee0",
+  "homepage": "https://github.com/trentlee0/spotfind",
   "scripts": {
     "format": "prettier --write .",
     "start": "electron-vite preview",
     "dev": "electron-vite dev",
     "build": "electron-vite build",
     "build:mac": "npm run build && electron-builder --mac --config",
-    "postinstall": "electron-builder install-app-deps"
+    "release": "npm run build && electron-builder --mac --config --publish always"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^1.0.3",
